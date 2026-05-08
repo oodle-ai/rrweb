@@ -1555,17 +1555,16 @@ export class Replayer {
       };
 
       const target = buildNodeWithSN(mutation.node, {
-        doc: targetDoc as Document, // can be Document or RRDocument
-        mirror: mirror as Mirror, // can be this.mirror or virtualDom.mirror
+        doc: targetDoc as Document,
+        mirror: mirror as Mirror,
         skipChild: true,
         hackCss: true,
         cache: this.cache,
-        /**
-         * caveat: `afterAppend` only gets called on child nodes of target
-         * we have to call it again below when this target was added to the DOM
-         */
         afterAppend,
       }) as Node | RRNode;
+      if (!target) {
+        return;
+      }
 
       // legacy data, we should not have -1 siblings any more
       if (mutation.previousId === -1 || mutation.nextId === -1) {

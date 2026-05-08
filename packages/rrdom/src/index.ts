@@ -453,6 +453,18 @@ export function getDefaultSN(node: IRRNode, id: number): serializedNodeWithId {
         type: node.RRNodeType,
         textContent: '',
       };
+    case RRNodeType.DocumentFragment:
+      return {
+        id,
+        type: node.RRNodeType,
+        childNodes: [],
+      };
+    default:
+      return {
+        id,
+        type: RRNodeType.Comment,
+        textContent: '',
+      };
   }
 }
 

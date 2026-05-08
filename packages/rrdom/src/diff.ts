@@ -570,9 +570,15 @@ export function createOrGetNode(
     case RRNodeType.CDATA:
       node = document.createCDATASection((rrNode as IRRCDATASection).data);
       break;
+    case RRNodeType.DocumentFragment:
+      node = document.createDocumentFragment();
+      break;
   }
 
-  if (sn) domMirror.add(node, { ...sn });
+  if (node && sn) domMirror.add(node, { ...sn });
+  if (!node) {
+    node = document.createDocumentFragment();
+  }
   try {
     createdNodeSet?.add(node);
   } catch (e) {

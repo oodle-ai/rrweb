@@ -712,6 +712,7 @@ export enum NodeType {
   Text,
   CDATA,
   Comment,
+  DocumentFragment = 11,
 }
 
 export type documentNode = {
@@ -799,6 +800,12 @@ export type commentNode = {
   textContent: string;
 };
 
+export type documentFragmentNode = {
+  type: NodeType.DocumentFragment;
+  childNodes: serializedNodeWithId[];
+  isShadowRoot?: boolean;
+};
+
 export type serializedNode = (
   | documentNode
   | documentTypeNode
@@ -806,6 +813,7 @@ export type serializedNode = (
   | textNode
   | cdataNode
   | commentNode
+  | documentFragmentNode
 ) & {
   rootId?: number;
   isShadowHost?: boolean;

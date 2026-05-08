@@ -435,6 +435,8 @@ function buildNode(
       return doc.createCDATASection(n.textContent);
     case NodeType.Comment:
       return doc.createComment(n.textContent);
+    case NodeType.DocumentFragment:
+      return doc.createDocumentFragment();
     default:
       return null;
   }
@@ -517,10 +519,13 @@ export function buildNodeWithSN(
   mirror.add(node, n);
 
   if (
-    (n.type === NodeType.Document || n.type === NodeType.Element) &&
+    (n.type === NodeType.Document ||
+      n.type === NodeType.Element ||
+      n.type === NodeType.DocumentFragment) &&
     !skipChild
   ) {
-    for (const childN of n.childNodes) {
+    for (const childN of n.childNodes || []) {
+      if (!childN || typeof childN !== 'object') continue;
       const childNode = buildNodeWithSN(childN, {
         doc,
         mirror,
