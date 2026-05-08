@@ -16384,13 +16384,19 @@ class Replayer {
       this.usingVirtualDom = false;
     }
     this.mirror.reset();
+    if (!event.data.node) {
+      return;
+    }
     rebuild(event.data.node, {
       doc: this.iframe.contentDocument,
       afterAppend,
       cache: this.cache,
       mirror: this.mirror
     });
-    afterAppend(this.iframe.contentDocument, event.data.node.id);
+    afterAppend(
+      this.iframe.contentDocument,
+      event.data.node.id
+    );
     for (const { mutationInQueue, builtNode } of collectedIframes) {
       this.attachDocumentToIframe(mutationInQueue, builtNode);
       this.newDocumentQueue = this.newDocumentQueue.filter(
