@@ -5552,6 +5552,9 @@ function buildNode(n2, options) {
   }
 }
 function buildNodeWithSN(n2, options) {
+  if (!n2 || typeof n2 !== "object" || typeof n2.id !== "number") {
+    return null;
+  }
   const {
     doc,
     mirror: mirror2,

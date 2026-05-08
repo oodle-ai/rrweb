@@ -5604,6 +5604,9 @@ function buildNode(n, options) {
   }
 }
 function buildNodeWithSN(n, options) {
+  if (!n || typeof n !== "object" || typeof n.id !== "number") {
+    return null;
+  }
   const {
     doc,
     mirror,
